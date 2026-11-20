@@ -1,0 +1,485 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>ห้องเรียนวิทยาศาสตร์ครูมิ้นท์</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&display=swap');*{box-sizing:border-box}body{margin:0;font-family:Kanit,sans-serif;color:#513449;background:linear-gradient(160deg,#c6ecff,#f5fbff 50%,#dcf6d0);min-height:100vh}header{padding:16px 26px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}h1{font-size:clamp(21px,3vw,35px);color:#d93e81;margin:0;text-shadow:0 2px #fff}header p{margin:0;color:#487d51}.shell{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:18px;padding:0 22px 20px;max-width:1600px;margin:auto}.stage{position:relative;min-height:620px;border-radius:28px;overflow:hidden;background:linear-gradient(#b4dff5,#d6eac9);box-shadow:0 12px 35px #6b8e9d33}.stage:after{content:'🌼  🌿       🌷        🌼     🌱';position:absolute;bottom:10px;left:15px;font-size:26px;pointer-events:none}.stage canvas{width:100%;height:100%;display:block;touch-action:none;cursor:grab}.stage canvas:active{cursor:grabbing}.orbit-pad{position:absolute;right:16px;bottom:20px;z-index:4;display:grid;grid-template-columns:repeat(3,42px);gap:5px}.orbit-pad button,.detail-controls button{background:#fff1f8;color:#bb3675;border:2px solid #ff9ac5;border-radius:14px;padding:7px;font-size:18px;box-shadow:0 3px 8px #6e436033}.orbit-pad button:hover,.detail-controls button:hover{background:#ffd2e6}.detail-controls{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;padding:7px;background:#fff8fc}.orbit-pad .empty{visibility:hidden}.hint{position:absolute;left:20px;top:20px;background:#fffdefed;padding:12px 18px;border-radius:20px;box-shadow:0 5px 18px #7a839a44;font-size:15px;max-width:270px}.controls{position:absolute;bottom:22px;left:20px;display:flex;gap:8px;flex-wrap:wrap;z-index:3}button{font:600 16px Kanit;cursor:pointer;border:0}.controls button,.back{background:linear-gradient(#ff8db8,#e9488c);border:2px solid #ffbfd5;border-radius:28px;padding:9px 16px;color:white;box-shadow:0 4px 0 #ba3974}.controls button:hover,.back:hover,.nav button:hover{filter:brightness(1.08);transform:translateY(-1px)}aside{display:flex;flex-direction:column;gap:15px}.nav{display:grid;grid-template-columns:1fr 1fr;gap:10px}.nav button{background:linear-gradient(#ff94bd,#e85091);border:3px solid #ffd3e4;border-radius:25px;padding:13px 8px;color:white;font-size:21px;box-shadow:0 5px 9px #ad53704a}.nav button.active{outline:3px solid #fff;box-shadow:0 0 0 5px #e94c91,0 5px 15px #d14b8e55}.info{background:#fff5faed;border:5px solid #ffc3db;border-radius:30px;padding:20px;box-shadow:0 10px 25px #8f6b8650;min-height:400px}.info h2{font-size:30px;color:#d93e81;margin:0 0 10px}.info h3{color:#cf3c7e;margin-bottom:5px}.info p{line-height:1.65;margin:8px 0}.info ul{padding-left:0;list-style:none}.info li{padding:5px 0}.info li:before{content:'✅ ';}.detail{display:none;position:absolute;inset:0;background:linear-gradient(135deg,#effaff,#fff3f9);z-index:2}.detail.show{display:flex;flex-direction:column}.detail .detailtop{display:flex;justify-content:space-between;align-items:center;padding:15px 20px;background:#ffffffc9}.detail h2{color:#d33e80;margin:0;font-size:25px}.detail canvas{flex:1;min-height:0}.detail small{padding:8px 20px;color:#785f6d}.pill{background:#fff;border-radius:16px;padding:10px 14px;margin:10px 0;border:2px solid #ffd0e3}.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:14px}.legend span{padding:5px 9px;border-radius:20px;background:white}.note{font-size:13px;color:#806576}.footer{text-align:center;padding:0 20px 16px;color:#557758}@media(max-width:900px){.shell{grid-template-columns:1fr}.stage{min-height:500px}aside{display:grid;grid-template-columns:1fr 1.4fr}.info{min-height:0}}@media(max-width:600px){header{padding:15px}.shell{padding:0 10px 15px}.stage{min-height:440px}.hint{font-size:12px;max-width:180px;padding:8px}.controls button{font-size:12px;padding:7px 10px}aside{display:flex}.nav button{font-size:17px}}
+ .pick-tip{position:absolute;z-index:5;pointer-events:none;background:#fffaf0f2;border:2px solid #f9a6cb;color:#8c2d63;padding:7px 12px;border-radius:15px;font-size:14px;box-shadow:0 4px 15px #573d5444;display:none}.stage canvas:focus{outline:3px solid #ef78b3} 
+.cell-lab{max-width:1556px;margin:10px auto 30px;padding:22px;border-radius:28px;background:#fff8fc;border:4px solid #ffc5dd;box-shadow:0 12px 30px #80507022}
+.cell-lab h2{margin:0 0 6px;color:#ce3d7f}.cell-lab p{line-height:1.65}.cell-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.cell-tabs button{padding:9px 15px;background:#ffe0ed;border:2px solid #f8a3c9;border-radius:22px;color:#a52b68}
+.cell-tabs button[aria-pressed=true]{background:#d94688;color:white}
+.cell-layout{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr);gap:18px}
+.cell-visual{border-radius:22px;background:linear-gradient(135deg,#effbea,#e7f7ff);padding:10px;min-height:330px;display:grid;place-items:center}
+.cell-visual svg{width:100%;max-width:570px;max-height:420px}.cell-visual [data-cell]{cursor:pointer;transition:filter .2s}
+.cell-visual [data-cell]:hover,.cell-visual [data-cell]:focus{filter:drop-shadow(0 0 7px #ff58a4);outline:none}
+.cell-desc{background:white;border:2px solid #f7d1e2;border-radius:20px;padding:18px}
+.cell-desc h3{color:#bb3473;margin-top:0}.cell-note{font-size:13px;color:#766777}
+@media(max-width:760px){.cell-layout{grid-template-columns:1fr}.cell-lab{margin:10px;padding:12px}}
+.root-icon{display:inline-block;width:1.3em;height:1.3em;vertical-align:-.25em;margin-right:.25em;background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cpath%20d%3D%22M32%205v17M32%2022v31M32%2028%2018%2039M32%2035%2045%2046M32%2040%2024%2055M32%2045%2039%2057M18%2039%2011%2048M45%2046%2054%2053M24%2055%2018%2060M39%2057%2044%2061%22%20fill%3D%22none%22%20stroke%3D%22%2381502e%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M20%2018q12-9%2024%200%22%20fill%3D%22none%22%20stroke%3D%22%23b67d4e%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M32%2022v-8%22%20stroke%3D%22%2381502e%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat}.nav .root-icon{filter:drop-shadow(0 1px 1px #fff9)}
+
+/* กรอบป้ายห้องเรียนแนวพาสเทล น่ารักและอ่านง่าย */
+.classroom-title-frame{position:relative;isolation:isolate;display:inline-block;max-width:100%;padding:19px 34px 17px;border:4px solid #ff9fc5;border-radius:30px;background:linear-gradient(135deg,#fffafc 0%,#ffe8f3 52%,#f2edff 100%);box-shadow:0 7px 0 #e9a5c4,0 13px 24px #a65b8730,inset 0 0 0 3px #fff;outline:2px dashed #fff;outline-offset:-11px;text-align:center}
+.classroom-title-frame:before,.classroom-title-frame:after{position:absolute;z-index:1;font-size:24px;line-height:1;filter:drop-shadow(0 2px 1px #fff);pointer-events:none}
+.classroom-title-frame:before{content:'🌼';left:-13px;top:-13px}.classroom-title-frame:after{content:'🦋';right:-12px;top:-14px}
+.classroom-title-frame h1{position:relative;color:#c93578;text-shadow:1px 2px 0 #fff,0 0 10px #fff;font-weight:700;line-height:1.35}
+.classroom-title-frame p{margin-top:5px;color:#657e55;font-weight:500}
+@media(max-width:600px){.classroom-title-frame{width:100%;padding:17px 16px 15px;border-radius:23px}.classroom-title-frame:before,.classroom-title-frame:after{font-size:20px}header{justify-content:center}header>span{text-align:center}}
+
+/* Mobile and iPad layout: large touch targets and stable 3D viewport */
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{overflow-x:hidden}button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.stage,.detail,#detailCanvas{min-width:0}
+#detailCanvas canvas,.stage>canvas{display:block;touch-action:none}
+@media(hover:none){.pick-tip{display:none!important}.controls button,.nav button,.orbit-pad button,.detail-controls button,.back{min-height:44px}}
+@media(max-width:1024px){.shell{grid-template-columns:1fr;gap:14px;padding-inline:14px}.stage{height:clamp(470px,68svh,760px);min-height:0}aside{display:grid;grid-template-columns:minmax(210px,.85fr) minmax(0,1.15fr);align-items:start}.info{min-height:0}.cell-lab{margin-inline:14px}}
+@media(max-width:700px){header{padding:10px 12px 12px;justify-content:center}header>span{display:none}.classroom-title-frame{width:100%;max-width:520px}.classroom-title-frame h1{font-size:clamp(20px,5vw,29px)}.shell{padding:0 9px 12px;gap:12px}.stage{height:clamp(440px,66svh,680px);border-radius:20px}.hint{top:9px;left:9px;max-width:min(65%,250px);font-size:12px;line-height:1.35;padding:8px 10px}.controls{left:9px;bottom:12px;gap:5px}.controls button{padding:8px 10px;font-size:13px}.orbit-pad{right:8px;bottom:12px;grid-template-columns:repeat(3,39px);gap:4px}.orbit-pad button{padding:5px;font-size:17px;min-height:40px}.detail .detailtop{padding:9px 10px;gap:8px}.detail h2{font-size:clamp(17px,4.3vw,23px)}.detail .back{padding:7px 9px;font-size:12px;flex-shrink:0}.detail small{font-size:11px;line-height:1.35;padding:5px 9px}.detail-controls{padding:5px;gap:4px}.detail-controls button{min-height:40px}.nav{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.nav button{padding:9px 2px;font-size:clamp(12px,3.2vw,16px);border-width:2px;border-radius:15px;min-height:48px}.info{padding:13px;border-width:3px;border-radius:20px}.info h2{font-size:23px}.info p{font-size:15px}aside{display:flex;flex-direction:column;gap:10px}.cell-lab{margin:9px;padding:10px}.cell-visual{min-height:230px}.cell-tabs button{min-height:44px}}
+@media(max-width:390px){.stage{height:clamp(420px,63svh,560px)}.hint{font-size:11px;max-width:63%}.orbit-pad{grid-template-columns:repeat(3,36px)}.orbit-pad button{font-size:15px}.controls button{font-size:12px;padding:7px}}
+@media(max-height:500px) and (orientation:landscape){.stage{height:85svh;min-height:330px}.hint{max-width:240px}header{padding:5px 12px}.classroom-title-frame{padding:8px 14px}}
+</style></head><body><header><div class="classroom-title-frame"><h1>🧪 ห้องเรียนวิทยาศาสตร์ครูมิ้นท์ 🌸</h1><p>มหัศจรรย์ส่วนประกอบของพืช • สื่อการเรียนรู้ 3 มิติ</p></div><span>🌿 เรียนรู้ผ่านการสำรวจ</span></header><main class="shell"><section class="stage" id="stage"><div class="hint" id="hint">👆 ลากนิ้วเพื่อหมุนต้นไม้ • ถ่างสองนิ้วเพื่อซูม (คอมพิวเตอร์ใช้เมาส์ได้)<br>แตะที่ราก ลำต้น ใบ หรือดอกบนต้นไม้เพื่อดูรายละเอียดทันที</div><div class="pick-tip" id="pickTip"></div><div class="controls"><button id="rotate">⏸ หยุดหมุน</button><button id="reset">↺ รีเซ็ต</button></div><div class="detail" id="detail"><div class="detailtop"><h2 id="detailTitle">ส่วนประกอบของพืช</h2><button class="back" id="back">↩ กลับสู่ภาพรวม</button></div><div id="detailCanvas" style="flex:1;min-height:0"></div><small>👆 ลากนิ้วเพื่อหมุน • ถ่างสองนิ้วเพื่อซูม • สีและการเคลื่อนที่เป็นแบบจำลองเพื่อการเรียนรู้</small></div></section><aside><div class="nav"><button data-part="root"><span class="root-icon" aria-hidden="true"></span>ราก</button><button data-part="stem">🪵 ลำต้น</button><button data-part="leaf">🍃 ใบ</button><button data-part="flower">🌸 ดอก</button></div><article class="info" id="info"><h2>🌳 รู้จักส่วนประกอบของพืช</h2><p>พืชมีส่วนประกอบสำคัญ ได้แก่ ราก ลำต้น ใบ และดอก แต่ละส่วนมีหน้าที่แตกต่างกันและทำงานร่วมกันเพื่อให้พืชดำรงชีวิต</p><div class="pill">✨ เลือกปุ่มสีชมพูด้านบนเพื่อเริ่มสำรวจโมเดล 3D แบบขยาย</div><h3>ลองสำรวจดูสิ!</h3><ul><li>รากดูดน้ำและแร่ธาตุ</li><li>ลำต้นลำเลียงสาร</li><li>ใบสร้างอาหารด้วยการสังเคราะห์ด้วยแสง</li><li>ดอกเกี่ยวข้องกับการสืบพันธุ์</li></ul></article></aside></main>
+<section class="cell-lab" id="cellLab" aria-label="ห้องทดลองเซลล์พืช">
+<h2>🔬 ห้องทดลองเซลล์พืช — สำรวจโครงสร้างที่พบจริง</h2>
+<p>เลือกชนิดเซลล์หรือเนื้อเยื่อ แล้วแตะส่วนประกอบในภาพเพื่อดูชื่อและหน้าที่ พร้อมเชื่อมโยงกับราก ลำต้น ใบ และดอก</p>
+<div class="cell-tabs" id="cellTabs">
+<button data-view="general" aria-pressed="true">🧫 เซลล์พืช</button>
+<button data-view="root" aria-pressed="false"><span class="root-icon" aria-hidden="true"></span>เซลล์ขนราก</button>
+<button data-view="stem" aria-pressed="false">🪵 ท่อลำเลียง</button>
+<button data-view="leaf" aria-pressed="false">🍃 เซลล์ใบ</button>
+<button data-view="flower" aria-pressed="false">🌸 เซลล์สืบพันธุ์</button>
+</div>
+<div class="cell-layout"><div class="cell-visual" id="cellVisual"></div>
+<div class="cell-desc" aria-live="polite"><h3 id="cellHeading">เซลล์พืช</h3><p id="cellText">คลิกส่วนต่าง ๆ ของเซลล์ในภาพเพื่อเรียนรู้</p><div id="cellFacts"></div><p class="cell-note">ภาพเป็นแผนผังขยายเพื่อการศึกษา ไม่ใช่ภาพถ่ายจากกล้องจุลทรรศน์ และไม่ใช่ทุกเซลล์ของพืชจะมีคลอโรพลาสต์</p></div></div>
+<p class="cell-note">อ้างอิงเนื้อหา: OpenStax Biology 2e (บท 4 และ 30) และ Nature Education: Plant Cells, Chloroplasts, and Cell Walls</p>
+</section>
+<div class="footer">สร้างเพื่อใช้เป็นสื่อประกอบการสอนวิทยาศาสตร์ • แบบจำลอง 3D เพื่อการศึกษา</div><script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js';
+const stage=document.querySelector('#stage'),holder=document.querySelector('#detailCanvas'),detail=document.querySelector('#detail'),info=document.querySelector('#info');
+const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(40,1,.1,100),renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,(window.matchMedia('(max-width:700px)').matches?1.5:2)));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.3;renderer.outputColorSpace=THREE.SRGBColorSpace;stage.insertBefore(renderer.domElement,stage.firstChild);camera.position.set(0,1.5,13.8);camera.lookAt(0,1.05,0);scene.add(new THREE.HemisphereLight(0xffffff,0x6d8a59,2.2));const sun=new THREE.DirectionalLight(0xffffff,2.6);sun.position.set(-4,9,6);sun.castShadow=true;sun.shadow.mapSize.set(window.matchMedia('(max-width:700px)').matches?1024:2048,window.matchMedia('(max-width:700px)').matches?1024:2048);scene.add(sun);
+// A seamless 360-degree environment from the underground soil to the blue sky.
+// The panorama is painted on the inside of a sphere and follows every orbit angle.
+const panoCanvas=document.createElement('canvas');panoCanvas.width=3072;panoCanvas.height=1536;
+const pc=panoCanvas.getContext('2d'),PW=panoCanvas.width,PH=panoCanvas.height;
+// Ground plane is y=0 in the 3D tree. In an equirectangular panorama,
+// keep the panorama soil horizon on the geometric equator (world y=0).
+// The brown soil base remains visible without a surrounding green terrain ring.
+const soilTop=PH/2;
+const skyGrad=pc.createLinearGradient(0,0,0,soilTop);
+skyGrad.addColorStop(0,'#277ebd');skyGrad.addColorStop(.35,'#79c5ed');skyGrad.addColorStop(.7,'#c4e9f9');skyGrad.addColorStop(1,'#edf7db');pc.fillStyle=skyGrad;pc.fillRect(0,0,PW,soilTop);
+// Soft cloud bands wrap around the panorama without a visible seam.
+for(let i=0;i<42;i++){const x=(i*401+155)%PW,y=68+(i*83)%380,w=72+(i%5)*27;for(const offset of [-PW,0,PW]){pc.fillStyle=i%3===0?'#ffffffb0':'#ffffff80';pc.beginPath();pc.ellipse(x+offset,y,w,14+(i%4)*7,-.06,0,Math.PI*2);pc.fill();}}
+// Bright sun and warm atmospheric halo.
+const sunX=2190,sunY=180;const glow=pc.createRadialGradient(sunX,sunY,12,sunX,sunY,180);glow.addColorStop(0,'#fff5bbdd');glow.addColorStop(.35,'#ffefad8c');glow.addColorStop(1,'#fff6cf00');pc.fillStyle=glow;pc.fillRect(sunX-185,sunY-185,370,370);pc.fillStyle='#fff3a9';pc.beginPath();pc.arc(sunX,sunY,46,0,Math.PI*2);pc.fill();
+// Distant mountains occupy the sky above the ground line only.
+function ridge(layer,color,baseline,amp){pc.fillStyle=color;pc.beginPath();pc.moveTo(0,soilTop);pc.lineTo(0,baseline);for(let x=0;x<=PW;x+=6){const t=x/PW*Math.PI*2;const wave=Math.sin(t*(layer+2)+layer*1.7)*amp*.42+Math.sin(t*(layer+5)+layer*.6)*amp*.24;const peak=Math.pow((Math.sin(t*(layer+8)+layer*3.9)+1)/2,5)*amp*.65;pc.lineTo(x,baseline-wave-peak);}pc.lineTo(PW,soilTop);pc.closePath();pc.fill();}
+ridge(1,'#d3e0e1',490,125);ridge(2,'#9dbdc6',570,112);ridge(3,'#6b9b99',645,85);ridge(4,'#4c815f',710,58);
+// A narrow meadow strip reaches the soil exactly at the adjusted panorama ground boundary.
+const meadow=pc.createLinearGradient(0,soilTop-90,0,soilTop);meadow.addColorStop(0,'#83b96a');meadow.addColorStop(1,'#477d3c');pc.fillStyle=meadow;pc.fillRect(0,soilTop-90,PW,90);
+for(let i=0;i<240;i++){const x=(i*127.7)%PW,y=soilTop-34+(i*13)%28;pc.strokeStyle=i%3===0?'#a4cf74':'#3f7b3a';pc.lineWidth=1.5;pc.beginPath();pc.moveTo(x,y+5);pc.lineTo(x-3+(i%7),y-5-(i%7));pc.stroke();}
+// The distant underground begins lower in the picture, aligning perceptually with the nearby soil base.
+const soilGrad=pc.createLinearGradient(0,soilTop,0,PH);soilGrad.addColorStop(0,'#50321f');soilGrad.addColorStop(.18,'#775033');soilGrad.addColorStop(.48,'#956744');soilGrad.addColorStop(.78,'#ad8157');soilGrad.addColorStop(1,'#79573e');pc.fillStyle=soilGrad;pc.fillRect(0,soilTop,PW,PH-soilTop);
+for(const [y,h,color] of [[soilTop,11,'#33271c'],[soilTop+116,7,'#a57548'],[soilTop+325,9,'#6c482d'],[soilTop+585,8,'#c09a6e']]){pc.fillStyle=color;pc.fillRect(0,y,PW,h);}
+for(let i=0;i<900;i++){const x=(i*173+Math.sin(i*3.71)*31+PW)%PW,y=soilTop+17+(i*67)%(PH-soilTop-26),r=1.5+(i%6)*.75;pc.fillStyle=i%4===0?'#d0ae83':i%3===0?'#4b3427':'#c1986a';pc.beginPath();pc.ellipse(x,y,r*1.6,r*.7,(i%7)*.2,0,Math.PI*2);pc.fill();}
+for(let i=0;i<60;i++){const x=(i*211+90)%PW,y=soilTop+7+(i%4)*13;for(const offset of [-PW,0,PW]){pc.strokeStyle=i%2===0?'#38271bd0':'#4d3020d0';pc.lineWidth=2+(i%3);pc.beginPath();pc.moveTo(x+offset,y);pc.bezierCurveTo(x+offset-12,y+65,x+offset+22,y+145,x+offset+Math.sin(i)*35,Math.min(PH,y+240+(i%4)*38));pc.stroke();}}
+// The panorama is background-only, so underground roots remain selectable.
+const panoTexture=new THREE.CanvasTexture(panoCanvas);panoTexture.colorSpace=THREE.SRGBColorSpace;panoTexture.wrapS=THREE.RepeatWrapping;panoTexture.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
+const panorama=new THREE.Mesh(new THREE.SphereGeometry(65,96,48),new THREE.MeshBasicMaterial({map:panoTexture,side:THREE.BackSide,depthWrite:false,fog:false}));panorama.renderOrder=-100;scene.add(panorama);
+// Bird silhouettes are three-dimensional, flapping as they cross the landscape.
+const birdMat=new THREE.MeshBasicMaterial({color:0x3b5360,side:THREE.DoubleSide,depthWrite:false});
+const birds=[];
+for(let i=0;i<9;i++){
+ const bird=new THREE.Group();
+ const body=new THREE.Mesh(new THREE.SphereGeometry(.095,8,6),birdMat);body.scale.set(1.35,.45,.6);bird.add(body);
+ const wings=[];
+ for(const side of [-1,1]){const wing=new THREE.Group();const shape=new THREE.Shape();shape.moveTo(0,0);shape.quadraticCurveTo(side*.33,.12,side*.86,.03);shape.quadraticCurveTo(side*.47,-.14,0,-.04);const mesh=new THREE.Mesh(new THREE.ShapeGeometry(shape),birdMat);wing.add(mesh);bird.add(wing);wings.push(wing)}
+ bird.scale.setScalar(.8+(i%4)*.28);scene.add(bird);birds.push({bird,wings,phase:i*.83,az:i*Math.PI*2/9,elevation:.10+(i%4)*.075,speed:.065+(i%3)*.024});
+}
+function animateBirds(time){for(const b of birds){const az=b.az+time*b.speed;const radius=38;const h=8+Math.sin(az*1.8+b.phase)*2.3+b.elevation*12;b.bird.position.set(Math.sin(az)*radius,h,Math.cos(az)*radius);b.bird.rotation.y=az+Math.PI/2;b.bird.rotation.z=Math.sin(time*.7+b.phase)*.055;const flap=Math.sin(time*5.3+b.phase)*.52;b.wings[0].rotation.z=flap;b.wings[1].rotation.z=-flap;}}
+
+const bark=new THREE.MeshStandardMaterial({color:0x704326,roughness:.94}),rootMat=new THREE.MeshStandardMaterial({color:0x946039,roughness:.9}),green=new THREE.MeshStandardMaterial({color:0x338b35,side:THREE.DoubleSide,roughness:.7}),pink=new THREE.MeshStandardMaterial({color:0xf67caf,side:THREE.DoubleSide,roughness:.55}),yellow=new THREE.MeshStandardMaterial({color:0xffd34f}),soilMat=new THREE.MeshStandardMaterial({color:0x6d3d25,roughness:1});const tree=new THREE.Group();scene.add(tree);
+function tube(parent,points,r,mat){let c=new THREE.CatmullRomCurve3(points.map(p=>new THREE.Vector3(...p)));let m=new THREE.Mesh(new THREE.TubeGeometry(c,Math.max(20,points.length*12),r,10,false),mat);parent.add(m);return m}
+function ellipsoid(parent,x,y,z,sx,sy,sz,mat){let m=new THREE.Mesh(new THREE.SphereGeometry(1,24,18),mat);m.position.set(x,y,z);m.scale.set(sx,sy,sz);parent.add(m);return m}
+function leaf(parent,x,y,z,scale=1,rot=0){const shape=new THREE.Shape();shape.moveTo(0,0);shape.bezierCurveTo(-.24,.25,-.28,.72,0,1.04);shape.bezierCurveTo(.29,.72,.24,.25,0,0);let mesh=new THREE.Mesh(new THREE.ShapeGeometry(shape,12),green);mesh.position.set(x,y,z);mesh.rotation.set(-.25,rot,Math.sin(rot)*.5);mesh.scale.setScalar(scale);parent.add(mesh);tube(parent,[[x,y,z+.012],[x,y+.48*scale,z+.025],[x,y+1.02*scale,z+.01]],.012*scale,new THREE.MeshStandardMaterial({color:0x91ca6d}));return mesh}
+function flower(parent,x,y,z,s=.7){let g=new THREE.Group();g.position.set(x,y,z);g.scale.setScalar(s);parent.add(g);for(let i=0;i<5;i++){let a=i*Math.PI*2/5;let petal=ellipsoid(g,Math.sin(a)*.38,Math.cos(a)*.38,0,.28,.49,.09,pink);petal.rotation.z=-a}ellipsoid(g,0,0,.11,.2,.2,.16,yellow);for(let i=0;i<7;i++){let a=i*6.28/7;tube(g,[[0,0,.16],[Math.sin(a)*.12,Math.cos(a)*.12,.34]],.012,yellow);ellipsoid(g,Math.sin(a)*.12,Math.cos(a)*.12,.34,.04,.05,.04,yellow)}return g}
+// Organic botanical model: tapered branching, sculpted leaves and fibrous roots.
+let seed=8741;function rnd(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296}function range(a,b){return a+(b-a)*rnd()}
+const wood=[0x84502e,0x965c34,0x754324].map(c=>new THREE.MeshStandardMaterial({color:c,roughness:1}));
+// Fine procedural bark texture gives the trunk subtle grain without external assets.
+const barkCanvas=document.createElement('canvas');barkCanvas.width=256;barkCanvas.height=512;const bc=barkCanvas.getContext('2d');bc.fillStyle='#e0b58a';bc.fillRect(0,0,256,512);let seedTex=913;function trand(){seedTex=(seedTex*1664525+1013904223)>>>0;return seedTex/4294967296}for(let i=0;i<1900;i++){let x=trand()*256,y=trand()*512;bc.strokeStyle=trand()>.5?'#865638':'#f0cda7';bc.globalAlpha=.13+trand()*.35;bc.lineWidth=.4+trand()*2;bc.beginPath();bc.moveTo(x,y);bc.bezierCurveTo(x+trand()*7-3,y+12,x+trand()*7-3,y+25,x+trand()*8-4,y+18+trand()*65);bc.stroke()}bc.globalAlpha=1;const barkTex=new THREE.CanvasTexture(barkCanvas);barkTex.wrapS=barkTex.wrapT=THREE.RepeatWrapping;barkTex.repeat.set(2,3);barkTex.colorSpace=THREE.SRGBColorSpace;wood.forEach(m=>{m.map=barkTex;m.needsUpdate=true});
+const foliage=[0x368b3c,0x419c43,0x4aa64b,0x2e7937,0x64ad4b,0x2c8440].map(c=>new THREE.MeshStandardMaterial({color:c,side:THREE.DoubleSide,roughness:.77}));
+// Gentle GPU wind: vertex deformation avoids updating hundreds of meshes on the CPU.
+const windTime={value:0};
+function windMaterial(material,kind){
+ material.onBeforeCompile=shader=>{
+  shader.uniforms.uWindTime=windTime;
+  shader.vertexShader='uniform float uWindTime;\n'+shader.vertexShader;
+  const effect=kind==='leaf'
+   ? `float windPhase=position.x*1.8+position.z*1.3; float windBend=(sin(uWindTime*1.18+windPhase)*0.024+sin(uWindTime*1.87+windPhase*1.7)*0.010); transformed.x+=windBend; transformed.z+=cos(uWindTime*1.06+windPhase)*0.018;`
+   : `float windHeight=max(position.y,0.0); float windPhase=position.x*5.0+position.z*4.0; transformed.x+=windHeight*(sin(uWindTime*1.65+windPhase)*0.22+sin(uWindTime*2.4+windPhase*1.7)*0.07); transformed.z+=windHeight*cos(uWindTime*1.4+windPhase)*0.14;`;
+  shader.vertexShader=shader.vertexShader.replace('#include <begin_vertex>','#include <begin_vertex>\n'+effect);
+ };
+ material.customProgramCacheKey=()=>`wind-${kind}-v1`;
+ material.needsUpdate=true;
+}
+foliage.forEach(m=>windMaterial(m,'leaf'));
+const veins=new THREE.MeshStandardMaterial({color:0x9dd071,roughness:.8});
+function branchBetween(parent,a,b,r1,r2,material){const v1=new THREE.Vector3(...a),v2=new THREE.Vector3(...b),delta=v2.clone().sub(v1);const m=new THREE.Mesh(new THREE.CylinderGeometry(r2,r1,delta.length(),14,1),material);m.position.copy(v1).add(v2).multiplyScalar(.5);m.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),delta.normalize());parent.add(m);return m}
+function curvedBranch(parent,points,r,mat){for(let i=0;i<points.length-1;i++)branchBetween(parent,points[i],points[i+1],r*(1-i/points.length)**1.15,Math.max(.009,r*(1-(i+1)/points.length)**1.15),mat)}
+function botanicalLeaf(parent,origin,direction,size,material){let dir=new THREE.Vector3(...direction).normalize(),up=new THREE.Vector3(0,1,0);let side=new THREE.Vector3().crossVectors(dir,up).normalize();if(side.length()<.1)side.set(1,0,0);let center=new THREE.Vector3(...origin);const positions=[],indices=[],steps=9;for(let i=0;i<=steps;i++){let t=i/steps,w=Math.sin(Math.PI*t)**.85*size*.22;let mid=center.clone().addScaledVector(dir,size*t);mid.y+=Math.sin(Math.PI*t)*size*.08;for(let j of [-1,0,1]){let v=mid.clone().addScaledVector(side,w*j);v.z+=Math.sin(Math.PI*t)*(1-Math.abs(j))*.035*size;positions.push(v.x,v.y,v.z)}}for(let i=0;i<steps;i++)for(let j=0;j<2;j++){let q=i*3+j;indices.push(q,q+3,q+1,q+1,q+3,q+4)}let geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));geo.setIndex(indices);geo.computeVertexNormals();parent.add(new THREE.Mesh(geo,material));let mid=center.clone().addScaledVector(dir,size*.52);tube(parent,[origin,mid.toArray(),center.clone().addScaledVector(dir,size).toArray()],.007,veins)}
+// Fine botanical details: procedural bark ridges, petioles, veinlets, root hairs and reproductive organs.
+const rootHairMat=new THREE.MeshStandardMaterial({color:0xd9b68b,roughness:1,transparent:true,opacity:.88});
+const petioleMat=new THREE.MeshStandardMaterial({color:0x548b38,roughness:.8});
+const pollenMat=new THREE.MeshStandardMaterial({color:0xffc943,roughness:.65});
+function addRootHairs(parent,curvePoints,count=100,length=.12){
+ const curve=new THREE.CatmullRomCurve3(curvePoints.map(p=>new THREE.Vector3(...p)));
+ const positions=[];
+ for(let i=0;i<count;i++){const t=.06+rnd()*.9,pt=curve.getPoint(t),tan=curve.getTangent(t);
+ let radial=new THREE.Vector3(Math.cos(i*2.399),range(-.35,.35),Math.sin(i*2.399)).addScaledVector(tan,-tan.dot(new THREE.Vector3(Math.cos(i*2.399),0,Math.sin(i*2.399)))).normalize();
+ let tip=pt.clone().addScaledVector(radial,length*range(.5,1.4));positions.push(pt.x,pt.y,pt.z,tip.x,tip.y,tip.z)}
+ const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
+ const hair=new THREE.LineSegments(geo,new THREE.LineBasicMaterial({color:0xc9a579,transparent:true,opacity:.83}));parent.add(hair);
+}
+function barkRidges(parent,start,end,r,n=11){
+ let a=new THREE.Vector3(...start),b=new THREE.Vector3(...end),dir=b.clone().sub(a),len=dir.length(),axis=dir.clone().normalize();
+ let u=new THREE.Vector3(1,0,0);if(Math.abs(u.dot(axis))>.92)u.set(0,0,1);
+ u.addScaledVector(axis,-u.dot(axis)).normalize();let v=new THREE.Vector3().crossVectors(axis,u).normalize();
+ const ridgeMat=new THREE.LineBasicMaterial({color:0x57391f,transparent:true,opacity:.42});
+ for(let k=0;k<n;k++){let angle=k*2*Math.PI/n,coords=[];for(let j=0;j<=14;j++){let t=j/14,pt=a.clone().addScaledVector(dir,t);let rr=r*(1-.18*t)+.006;let phi=angle+t*.25+Math.sin(t*17+k)*.035;pt.addScaledVector(u,Math.cos(phi)*rr).addScaledVector(v,Math.sin(phi)*rr);coords.push(pt)}
+ let geo=new THREE.BufferGeometry().setFromPoints(coords);parent.add(new THREE.Line(geo,ridgeMat))}
+}
+function detailFlowerAnatomy(parent,scale=1){
+ const g=new THREE.Group();g.scale.setScalar(scale);parent.add(g);
+ const pistil=new THREE.MeshStandardMaterial({color:0xb7d84e,roughness:.55});
+ tube(g,[[0,0,.1],[0,0,.42],[0,0,.86]],.045,pistil);
+ ellipsoid(g,0,0,.9,.13,.13,.075,pistil);
+ ellipsoid(g,0,0,.2,.13,.19,.13,new THREE.MeshStandardMaterial({color:0x75ae45}));
+ for(let i=0;i<9;i++){let a=i*Math.PI*2/9,x=Math.cos(a)*.24,y=Math.sin(a)*.24;
+ tube(g,[[x*.48,y*.48,.12],[x,y,.38],[x*1.13,y*1.13,.62]],.018,petioleMat);
+ let anther=ellipsoid(g,x*1.13,y*1.13,.65,.07,.12,.045,pollenMat);anther.rotation.z=-a;
+ for(let j=0;j<2;j++)ellipsoid(g,x*1.13+range(-.06,.06),y*1.13+range(-.06,.06),.7+range(0,.05),.014,.014,.014,pollenMat);
+ }
+}
+
+
+const ground=new THREE.Mesh(new THREE.CylinderGeometry(3.25,3.05,.38,72),soilMat);ground.position.y=-.22;tree.add(ground);
+// Removed the surrounding green ground plane; the brown soil base remains.
+// Decorative 3D grass grows only on the existing brown soil disc (no green ground plane).
+// Each tuft is a small curved cluster with individual shades and animated wind.
+const grassMat=new THREE.MeshStandardMaterial({vertexColors:true,side:THREE.DoubleSide,roughness:.92});windMaterial(grassMat,'grass');
+const grassPalette=[0x4b8b35,0x5e9c3c,0x73ae43,0x8ac34e,0x9ec95b,0x397b34];
+const grassPositions=[],grassColors=[],grassNormals=[];
+function addGrassBlade(x,z,height,width,lean,angle,color){
+ const dx=Math.cos(angle),dz=Math.sin(angle),sideX=-dz,sideZ=dx;
+ const p0=[x-sideX*width/2,.015,z-sideZ*width/2],p1=[x+sideX*width/2,.015,z+sideZ*width/2];
+ const mid=[x+dx*lean*.42,.015+height*.57,z+dz*lean*.42];
+ const tip=[x+dx*lean,.015+height,z+dz*lean];
+ const shade=new THREE.Color(color),base=shade.clone().multiplyScalar(.72),middle=shade.clone().multiplyScalar(.95),top=shade.clone().lerp(new THREE.Color(0xc3dc78),.24);
+ function tri(a,b,c,ca,cb,cc){for(const [p,col] of [[a,ca],[b,cb],[c,cc]]){grassPositions.push(...p);grassColors.push(col.r,col.g,col.b)}}
+ tri(p0,p1,mid,base,base,middle);tri(p0,mid,tip,base,middle,top);
+}
+for(let i=0;i<145;i++){
+ const a=rnd()*Math.PI*2,r=Math.sqrt(rnd())*3.08;
+ const cx=Math.cos(a)*r,cz=Math.sin(a)*r;
+ const count=4+Math.floor(rnd()*5),h=range(.14,.33)*(r<.6?.68:1);
+ for(let j=0;j<count;j++){
+  const theta=j*Math.PI*2/count+range(-.28,.28);
+  addGrassBlade(cx+range(-.045,.045),cz+range(-.045,.045),h*range(.65,1.18),range(.025,.052),range(.045,.15),theta,grassPalette[Math.floor(rnd()*grassPalette.length)]);
+ }
+}
+const grassGeo=new THREE.BufferGeometry();
+grassGeo.setAttribute('position',new THREE.Float32BufferAttribute(grassPositions,3));
+grassGeo.setAttribute('color',new THREE.Float32BufferAttribute(grassColors,3));
+grassGeo.computeVertexNormals();
+const meadowGrass=new THREE.Mesh(grassGeo,grassMat);meadowGrass.frustumCulled=false;tree.add(meadowGrass);
+// Tiny flowers scattered among the tufts, kept low so roots and stem remain clear.
+const flowerColors=[0xffe8a1,0xffc8db,0xfaf6ff,0xc9c2ff];
+for(let i=0;i<28;i++){
+ const a=rnd()*Math.PI*2,r=range(.75,3.0),x=Math.cos(a)*r,z=Math.sin(a)*r;
+ const stalk=new THREE.Mesh(new THREE.CylinderGeometry(.008,.012,.13,5),new THREE.MeshStandardMaterial({color:0x4e8e35}));
+ stalk.position.set(x,.077,z);tree.add(stalk);
+ const petalMat=new THREE.MeshStandardMaterial({color:flowerColors[i%flowerColors.length],roughness:.8,side:THREE.DoubleSide});
+ for(let p=0;p<5;p++){const theta=p*Math.PI*2/5;const petal=new THREE.Mesh(new THREE.SphereGeometry(.035,6,4),petalMat);petal.scale.set(.8,.34,1);petal.position.set(x+Math.cos(theta)*.033,.15,z+Math.sin(theta)*.033);tree.add(petal)}
+ const center=new THREE.Mesh(new THREE.SphereGeometry(.024,7,5),new THREE.MeshStandardMaterial({color:0xf5c84c}));center.position.set(x,.155,z);tree.add(center);
+}
+const trunk=[[0,-.04,0],[.06,.45,.01],[.08,1.1,0],[.035,1.8,-.04],[-.04,2.5,-.07],[.02,3.25,-.02],[.04,3.9,0]];
+for(let i=0;i<trunk.length-1;i++)branchBetween(tree,trunk[i],trunk[i+1],.34-i*.039,.34-(i+1)*.039,wood[i%3]);
+// Balanced crown: branches in staggered whorls, tapering toward the apex.
+for(let tier=0;tier<7;tier++){
+ const level=1.25+tier*.39;
+ const count=tier<2?5:4;
+ const reach=2.12-tier*.19;
+ for(let k=0;k<count;k++){
+  const angle=(k/count)*Math.PI*2+tier*.83;
+  const dx=Math.cos(angle),dz=Math.sin(angle);
+  const base=[.035,level,-.02];
+  const joint=[dx*reach*.44,level+.20,dz*reach*.44];
+  const tip=[dx*reach,level+.48+tier*.06,dz*reach];
+  const thick=Math.max(.042,.13-tier*.012);
+  curvedBranch(tree,[base,joint,tip],thick,wood[(tier+k)%3]);
+  barkRidges(tree,base,joint,thick*.83,6);
+  for(let j=0;j<3;j++){
+   const t=.43+j*.23;
+   const p=[joint[0]+(tip[0]-joint[0])*t,joint[1]+(tip[1]-joint[1])*t,joint[2]+(tip[2]-joint[2])*t];
+   const side=angle+(j%2?1:-1)*.78;
+   const e=[p[0]+Math.cos(side)*.44,p[1]+.22,p[2]+Math.sin(side)*.44];
+   branchBetween(tree,p,e,.026,.008,wood[1]);
+   for(let n=0;n<5;n++){
+    const u=.18+n*.18;
+    const q=[p[0]+(e[0]-p[0])*u,p[1]+(e[1]-p[1])*u,p[2]+(e[2]-p[2])*u];
+    const leafAngle=side+(n%2?-.65:.65);
+    botanicalLeaf(tree,q,[Math.cos(leafAngle),.48,Math.sin(leafAngle)],.39+(n%3)*.055,foliage[(tier+k+n)%foliage.length]);
+   }
+  }
+  if((tier+k)%3===0){const bloom=flower(tree,tip[0],tip[1]+.09,tip[2],.29);bloom.rotation.y=angle;}
+ }
+}
+// A visible taproot and many fine branching rootlets, shown beneath the soil layer.
+barkRidges(tree,[0,.1,0],[0,2.7,0],.21,17);const rootCaptureStart=tree.children.length;const tap=[[0,-.05,0],[.02,-.48,0],[-.03,-1.05,.02],[.04,-1.75,.03],[.02,-2.35,.02]];for(let i=0;i<tap.length-1;i++)branchBetween(tree,tap[i],tap[i+1],.23-i*.045,.23-(i+1)*.045,rootMat);
+for(let i=0;i<37;i++){let a=i*2.399,dx=Math.cos(a),dz=Math.sin(a),startY=-.12-(i%8)*.15,len=range(.85,2.9),pts=[[0,startY,0],[dx*len*.33,startY-.28,dz*len*.3],[dx*len*.72,startY-range(.5,.95),dz*len*.7],[dx*len,startY-range(1.0,1.7),dz*len]];curvedBranch(tree,pts,range(.035,.095),rootMat);for(let j=1;j<4;j++){let base=pts[j],az=a+range(-1.6,1.6),end=[base[0]+Math.cos(az)*range(.22,.75),base[1]-range(.2,.65),base[2]+Math.sin(az)*range(.22,.75)];branchBetween(tree,base,end,.018,.004,rootMat);for(let k=0;k<2;k++){let mid=[base[0]+(end[0]-base[0])*(k+1)/3,base[1]+(end[1]-base[1])*(k+1)/3,base[2]+(end[2]-base[2])*(k+1)/3];branchBetween(tree,mid,[mid[0]+range(-.18,.18),mid[1]-range(.12,.32),mid[2]+range(-.18,.18)],.007,.002,rootMat)}}}
+for(let i=0;i<26;i++){let a=i*2.399,yy=-.3-(i%8)*.24,l=.55+(i%5)*.19;addRootHairs(tree,[[0,yy,0],[Math.cos(a)*l*.5,yy-.25,Math.sin(a)*l*.4],[Math.cos(a)*l,yy-.65,Math.sin(a)*l*.6]],45,.075)}
+const rootCaptureEnd=tree.children.length;
+// Enhanced realistic close-up botanical features (deterministic procedural geometry).
+const twigMaterial=new THREE.MeshStandardMaterial({color:0x794728,roughness:1});
+const sepalsMaterial=new THREE.MeshStandardMaterial({color:0x448742,roughness:.9,side:THREE.DoubleSide});
+const leafMidrib=new THREE.LineBasicMaterial({color:0xb1d68a,transparent:true,opacity:.78});
+for(let i=0;i<32;i++){
+ const a=i*2.39996,level=1.65+(i%20)*.105,r=.75+(.25+.55*rnd())*(1-(level-1.65)/5);
+ const tip=[Math.cos(a)*r,level,Math.sin(a)*r];
+ const end=[tip[0]+Math.cos(a+.38)*range(.13,.32),level+range(.08,.3),tip[2]+Math.sin(a+.38)*range(.13,.32)];
+ branchBetween(tree,tip,end,.014,.004,twigMaterial);
+ if(i%5===0){let b=flower(tree,end[0],end[1],end[2],range(.16,.25));
+  b.rotation.set(range(-.5,.5),a,range(-.4,.4));
+  for(let j=0;j<5;j++){let theta=j*2*Math.PI/5;
+   const sepal=ellipsoid(b,Math.sin(theta)*.22,Math.cos(theta)*.22,-.12,.1,.22,.035,sepalsMaterial);sepal.rotation.z=-theta;
+  }
+  detailFlowerAnatomy(b,.42);
+ }
+}
+// Irregular trunk growth lines and knots visible when zooming close.
+for(let i=0;i<25;i++){
+ const a=i*2.39996,y=.22+(i%23)*.13,r=.31-y*.038;
+ if(r<.055)continue;
+ const knot=ellipsoid(tree,Math.cos(a)*r,y,Math.sin(a)*r,.045,.085,.025,wood[i%3]);
+ knot.rotation.y=a;
+}
+// Fine hair roots along the underground root network.
+const fineRootCaptureStart=tree.children.length;
+for(let i=0;i<36;i++){
+ const a=i*2.39996,y=-.25-(i%11)*.14,l=.8+(i%6)*.17;
+ addRootHairs(tree,[[0,y,0],[Math.cos(a)*l*.4,y-.28,Math.sin(a)*l*.35],[Math.cos(a)*l,y-.7,Math.sin(a)*l*.7]],65,.09);
+}
+const fineRootCaptureEnd=tree.children.length;
+const completeRootObjects=[...tree.children.slice(rootCaptureStart,rootCaptureEnd),...tree.children.slice(fineRootCaptureStart,fineRootCaptureEnd)];
+const detailScene=new THREE.Scene(),detailCam=new THREE.PerspectiveCamera(40,1,.1,100),detailRenderer=new THREE.WebGLRenderer({antialias:true,alpha:true});detailRenderer.setPixelRatio(Math.min(window.devicePixelRatio||1,(window.matchMedia('(max-width:700px)').matches?1.5:2)));detailRenderer.outputColorSpace=THREE.SRGBColorSpace;holder.appendChild(detailRenderer.domElement);detailScene.add(new THREE.HemisphereLight(0xffffff,0x888888,2.8));let light=new THREE.DirectionalLight(0xffffff,2.2);light.position.set(-3,6,8);detailScene.add(light);let model=new THREE.Group();detailScene.add(model);detailCam.position.set(0,0,7);let particles=[],part=null,auto=true,drag=false,lastX=0;
+function clearModel(){while(model.children.length){let c=model.children[0];model.remove(c);c.traverse(o=>{if(o.geometry)o.geometry.dispose()})}particles=[];model.rotation.set(0,0,0)}
+
+// Show the actual complete underground root system from the main tree, not a separately generated approximation.
+function createRoot(){
+ const roots=new THREE.Group();
+ for(const original of completeRootObjects){
+  const copy=original.clone(true);
+  copy.traverse(node=>{if(node.geometry)node.geometry=node.geometry.clone()});
+  roots.add(copy);
+ }
+ // Move the root collar to the upper part of the detail view and fit all fine root tips inside the viewport.
+ const bounds=new THREE.Box3().setFromObject(roots);
+ const center=bounds.getCenter(new THREE.Vector3());
+ roots.position.set(-center.x,-center.y,-center.z);
+ const dimensions=bounds.getSize(new THREE.Vector3());
+ const scale=Math.min(1.35,4.6/Math.max(dimensions.x,dimensions.y,dimensions.z));
+ roots.scale.setScalar(scale);
+ model.add(roots);
+ // Animated water droplets travel from surrounding soil into fine roots, toward the taproot,
+ // and finally upward through the root collar. Paths use the same transformation as the cloned roots.
+ const waterMat=new THREE.MeshStandardMaterial({color:0x43c8ff,emissive:0x0879c7,emissiveIntensity:.65,transparent:true,opacity:.95,depthWrite:false});
+ const waterGeo=new THREE.SphereGeometry(.047,10,8);
+ const toRootSpace=p=>new THREE.Vector3(...p).add(roots.position).multiplyScalar(scale);
+ for(let i=0;i<22;i++){
+  const angle=i*2.39996,radial=1.1+(i%6)*.23,depth=-.55-(i%8)*.17;
+  const outer=[Math.cos(angle)*(radial+.55),depth-.28,Math.sin(angle)*(radial+.55)];
+  const entry=[Math.cos(angle)*radial,depth-.30,Math.sin(angle)*radial];
+  const inner=[Math.cos(angle)*.22,depth-.12,Math.sin(angle)*.22];
+  const collar=[.02,.05,.02];
+  const path=new THREE.CatmullRomCurve3([outer,entry,inner,[0,depth+.26,0],[0,-.25,0],collar].map(toRootSpace));
+  for(let j=0;j<3;j++){
+   const drop=new THREE.Mesh(waterGeo,waterMat.clone());
+   model.add(drop);
+   particles.push({rootWater:true,orb:drop,path,phase:(j/3+i*.137)%1,speed:.13+(i%4)*.014});
+  }
+ }
+}
+function createStem(){
+ // แบบจำลองหน้าตัดลำต้นพืชใบเลี้ยงคู่: ไซเล็มด้านใน โฟลเอ็มด้านนอก
+ const stem=new THREE.Mesh(new THREE.CylinderGeometry(1.05,1.05,4.1,48,1,true),new THREE.MeshStandardMaterial({color:0xc99766,transparent:true,opacity:.18,side:THREE.DoubleSide}));model.add(stem);
+ const blue=new THREE.MeshStandardMaterial({color:0x3dbbff,emissive:0x076fb8,emissiveIntensity:.35});
+ const orange=new THREE.MeshStandardMaterial({color:0xffa64b,emissive:0xc95700,emissiveIntensity:.2});
+ for(let i=0;i<9;i++){
+  const a=i*Math.PI*2/9;
+  for(let k=0;k<2;k++){
+   const radius=k===0?.48:.78; // ไซเล็มด้านใน (.48) / โฟลเอ็มด้านนอก (.78)
+   const xx=Math.cos(a)*radius,zz=Math.sin(a)*radius,mat=k===0?blue:orange;
+   const pipe=new THREE.Mesh(new THREE.CylinderGeometry(.105,.105,4,14,1,true),new THREE.MeshStandardMaterial({color:mat.color,transparent:true,opacity:.56,side:THREE.DoubleSide}));
+   pipe.position.set(xx,0,zz);model.add(pipe);
+   for(let j=0;j<5;j++){
+    const orb=ellipsoid(model,xx,-1.8+j*.75,zz,.057,.095,.057,mat);
+    particles.push({orb,base:-1.8+j*.75,up:k===0,speed:.55+(i%3)*.1});
+   }
+  }
+ }
+ let top=new THREE.Mesh(new THREE.TorusGeometry(1.05,.07,12,48),bark);top.rotation.x=Math.PI/2;top.position.y=2.05;model.add(top);
+}
+function formulaSprite(formula,color){
+ const canvas=document.createElement('canvas');canvas.width=256;canvas.height=104;
+ const ctx=canvas.getContext('2d');ctx.clearRect(0,0,256,104);
+ ctx.fillStyle='rgba(255,255,255,.90)';ctx.beginPath();ctx.roundRect(4,5,248,94,26);ctx.fill();
+ ctx.strokeStyle=color;ctx.lineWidth=5;ctx.stroke();
+ const segments=formula.match(/[A-Za-z]+|[0-9]+/g)||[formula];
+ ctx.textBaseline='alphabetic';let widths=[];
+ for(const s of segments){const small=/^\d+$/.test(s);ctx.font=(small?'500 29px':'700 49px')+' Kanit, sans-serif';widths.push(ctx.measureText(s).width)}
+ let x=(256-widths.reduce((a,b)=>a+b,0))/2;
+ segments.forEach((s,i)=>{const small=/^\d+$/.test(s);ctx.font=(small?'500 29px':'700 49px')+' Kanit, sans-serif';ctx.fillStyle=color;ctx.fillText(s,x,small?74:65);x+=widths[i]});
+ const tex=new THREE.CanvasTexture(canvas);tex.colorSpace=THREE.SRGBColorSpace;
+ const sprite=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthTest:false,depthWrite:false}));
+ sprite.scale.set(formula.length>5?.25:.19,.079,1);sprite.renderOrder=10;return sprite;
+}
+function createLeaf(){
+ const g=new THREE.Group();g.rotation.z=-.15;g.scale.set(3.0,3.1,3.0);model.add(g);
+ // The leaf blade, petiole, and all veins share one local coordinate system.
+ const bladeShape=new THREE.Shape();bladeShape.moveTo(0,-.46);
+ bladeShape.bezierCurveTo(-.13,-.29,-.29,.04,-.21,.27);
+ bladeShape.bezierCurveTo(-.15,.47,-.05,.54,0,.58);
+ bladeShape.bezierCurveTo(.05,.54,.15,.47,.21,.27);
+ bladeShape.bezierCurveTo(.29,.04,.13,-.29,0,-.46);
+ const blade=new THREE.Mesh(new THREE.ShapeGeometry(bladeShape,28),new THREE.MeshStandardMaterial({color:0x3aab4a,side:THREE.DoubleSide,roughness:.72}));g.add(blade);
+ const veinMat=new THREE.MeshStandardMaterial({color:0xb1e58a,roughness:.75});
+ tube(g,[[0,-.46,.014],[0,-.12,.022],[0,.27,.022],[0,.565,.014]],.012,veinMat);
+ // Vein endpoints follow the blade's actual curved silhouette, never float beyond it.
+ for(let i=0;i<8;i++){
+  const t=(i+.7)/9, y=-.42+t*.93;
+  const w=.215*Math.pow(Math.sin(Math.PI*t),.9)*.88;
+  for(const side of [-1,1]){
+   tube(g,[[0,y,.027],[side*w*.52,y+.045,.029],[side*w,y+.075,.017]],.0048,veinMat);
+  }
+ }
+ tube(g,[[0,-.86,-.005],[.008,-.65,0],[0,-.46,.012]],.023,petioleMat);
+ // Incoming CO2, xylem water, and small orange sunlight packets; outgoing O2, water vapor, and sugar.
+ const flows=[
+  {formula:'CO2',color:'#2788b8',start:[-.82,.13,.18],end:[-.13,.13,.18],duration:3.5,phase:0},
+  {formula:'H2O',color:'#2674d2',start:[0,-.89,.18],end:[0,-.16,.18],duration:3.6,phase:.18},
+  {formula:'O2',color:'#239c77',start:[.14,.28,.18],end:[.87,.44,.18],duration:3.2,phase:.5},
+  {formula:'H2O',color:'#56b8d9',start:[.13,-.05,.18],end:[.86,-.22,.18],duration:3.9,phase:.33},
+  {formula:'C6H12O6',color:'#bf7422',start:[.02,.08,.24],end:[.90,-.72,.24],duration:4.8,phase:.62}
+ ];
+ for(const f of flows){for(let i=0;i<2;i++){const orb=formulaSprite(f.formula,f.color);g.add(orb);particles.push({orb,gasFlow:true,...f,phase:(f.phase+i*.5)%1});}}
+ // Sunlight is shown as tiny orange circles moving from the sun toward the leaf.
+ const lightPacketMat=new THREE.MeshBasicMaterial({color:0xff9c26,transparent:true,opacity:.98,depthTest:false});
+ for(let i=0;i<9;i++){
+  const orb=new THREE.Mesh(new THREE.SphereGeometry(.014,10,8),lightPacketMat.clone());g.add(orb);
+  particles.push({orb,lightFlow:true,phase:i/9,speed:.28+(i%3)*.035,
+   start:[-.43+(i%3)*.035,.69-(i%2)*.03,.19],end:[-.12+(i%4)*.065,.20+(i%3)*.07,.19]});
+ }
+ // Visible 3D sun, positioned beside the leaf without covering the blade.
+ const sunGroup=new THREE.Group();sunGroup.position.set(-.44,.73,.12);g.add(sunGroup);
+ const sunCore=new THREE.Mesh(new THREE.SphereGeometry(.105,24,16),new THREE.MeshBasicMaterial({color:0xffd447}));sunGroup.add(sunCore);
+ const sunGlow=new THREE.Sprite(new THREE.SpriteMaterial({color:0xffd966,transparent:true,opacity:.28,depthWrite:false}));sunGlow.scale.set(.38,.38,1);sunGroup.add(sunGlow);
+ const rayMat=new THREE.LineBasicMaterial({color:0xffbc29,transparent:true,opacity:.94});
+ for(let i=0;i<12;i++){const a=i*Math.PI/6;const p1=new THREE.Vector3(Math.cos(a)*.14,Math.sin(a)*.14,0),p2=new THREE.Vector3(Math.cos(a)*.205,Math.sin(a)*.205,0);sunGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([p1,p2]),rayMat));}
+ // Short golden light rays point toward the chlorophyll-containing leaf.
+ const lightMat=new THREE.LineDashedMaterial({color:0xffd044,dashSize:.055,gapSize:.032,transparent:true,opacity:.85});
+ for(let i=0;i<3;i++){const a=new THREE.Vector3(-.34+i*.065,.59,.12),b=new THREE.Vector3(-.16+i*.055,.36,.12);const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),lightMat);line.computeLineDistances();g.add(line);}
+ particles.push({sunGroup,sunGlow,sun:true});
+}
+// Labels are attached to the enlarged 3D flower and remain readable while rotating.
+function flowerCallout(text,anchor,labelPos,color){
+ const canvas=document.createElement('canvas');canvas.width=640;canvas.height=140;
+ const ctx=canvas.getContext('2d');ctx.fillStyle='rgba(255,255,255,.96)';
+ ctx.beginPath();ctx.roundRect(7,7,626,126,36);ctx.fill();
+ ctx.strokeStyle=color;ctx.lineWidth=9;ctx.stroke();
+ ctx.fillStyle='#713758';ctx.font='600 58px Kanit, sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,320,73);
+ const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;
+ const sprite=new THREE.Sprite(new THREE.SpriteMaterial({map:texture,transparent:true,depthTest:false}));
+ sprite.position.set(...labelPos);sprite.scale.set(1.95,.43,1);sprite.renderOrder=12;model.add(sprite);
+ const start=new THREE.Vector3(labelPos[0]+(labelPos[0]<0?.8:-.8),labelPos[1],labelPos[2]);
+ const end=new THREE.Vector3(...anchor);
+ const arrow=new THREE.ArrowHelper(end.clone().sub(start).normalize(),start,start.distanceTo(end),color,.17,.085);
+ arrow.line.material.depthTest=false;arrow.cone.material.depthTest=false;arrow.renderOrder=10;arrow.line.renderOrder=10;arrow.cone.renderOrder=10;model.add(arrow);
+}
+function flowerCallouts(){
+ flowerCallout('กลีบดอก',[.80,.75,.14],[-2.45,1.53,.45],0xe961a4);
+ flowerCallout('กลีบเลี้ยง',[-.82,-.35,-.12],[-2.45,-1.48,.65],0x57a567);
+ flowerCallout('เกสรเพศผู้',[.42,.12,1.08],[2.48,1.49,1.02],0xe4a12c);
+ flowerCallout('เกสรเพศเมีย',[0,0,1.52],[2.48,-1.44,1.2],0x9d7acb);
+}
+function createFlower(){flower(model,0,0,0,2.2);detailFlowerAnatomy(model,1.7);for(let i=0;i<5;i++){let a=i*6.28/5;let m=ellipsoid(model,Math.sin(a)*.9,Math.cos(a)*.9,-.12,.15,.48,.13,new THREE.MeshStandardMaterial({color:0x65ad48,side:THREE.DoubleSide}));m.rotation.z=-a}tube(model,[[0,0,-.15],[0,-1.5,-.35]],.13,new THREE.MeshStandardMaterial({color:0x568a3d}));model.rotation.x=-.1;flowerCallouts()}
+const data={root:{title:'ราก',intro:'รากเป็นส่วนของพืชที่โดยทั่วไปเจริญอยู่ใต้ดิน ทำหน้าที่ดูดน้ำและแร่ธาตุจากดิน รวมทั้งช่วยยึดพืชให้มั่นคง',points:['ดูดน้ำและแร่ธาตุเข้าสู่พืช','ยึดลำต้นให้มั่นคง','รากของพืชบางชนิดสะสมอาหาร'],extra:'สังเกตรากหลัก รากแขนง และรากฝอยที่แผ่ออกในดิน • 💧 จุดสีฟ้าแสดงน้ำจากดินเข้าสู่ราก ผ่านเนื้อเยื่อรากไปยังไซเล็ม แล้วลำเลียงขึ้นสู่ลำต้น'},stem:{title:'🪵 ลำต้น',intro:'ลำต้นทำหน้าที่ลำเลียงน้ำ แร่ธาตุ และอาหารไปยังส่วนต่าง ๆ ของพืช อีกทั้งช่วยพยุงใบและดอก โดยมีท่อลำเลียงที่สำคัญคือ ไซเล็มและโฟลเอ็ม',points:['ลำต้นช่วยพยุงใบและดอกให้ได้รับแสงและอยู่ในตำแหน่งที่เหมาะสม','ไซเล็ม (Xylem) เป็นท่อลำเลียงน้ำและแร่ธาตุ มีทิศทางการเคลื่อนที่ของน้ำจากด้านล่างขึ้นสู่ด้านบน จากรากไปยังส่วนต่าง ๆ ของพืช','โฟลเอ็ม (Phloem) เป็นท่อลำเลียงอาหาร โดยลำเลียงน้ำตาลที่สร้างจากใบไปยังส่วนต่าง ๆ ของพืช เช่น ลำต้น ราก และดอก'],extra:'🔵 ไซเล็มอยู่ด้านในของลำต้นในแบบจำลองนี้ จุดสีฟ้าเคลื่อนจากล่างขึ้นบนเพื่อแสดงการลำเลียงน้ำและแร่ธาตุ • 🟠 โฟลเอ็มอยู่ด้านนอกของไซเล็ม จุดสีส้มแสดงตัวอย่างการลำเลียงอาหารจากใบไปยังส่วนต่าง ๆ ของพืช (ทิศทางจริงของโฟลเอ็มขึ้นอยู่กับแหล่งสร้างและแหล่งใช้ จึงเคลื่อนขึ้นหรือลงได้)'},leaf:{title:'🍃 ใบ',intro:'ใบทำหน้าที่สร้างอาหารให้แก่พืช โดยใช้กระบวนการสังเคราะห์ด้วยแสง ซึ่งอาศัยพลังงานแสงจากดวงอาทิตย์ น้ำ และคาร์บอนไดออกไซด์ อาหารที่พืชสร้างขึ้นคือน้ำตาลกลูโคส (C₆H₁₂O₆) และมีออกซิเจนเป็นผลิตภัณฑ์ร่วม',points:['ใบทำหน้าที่สร้างอาหารให้แก่พืชด้วยกระบวนการสังเคราะห์ด้วยแสง โดยอาหารที่สร้างขึ้นคือน้ำตาลกลูโคส (C₆H₁₂O₆)','คลอโรฟิลล์ในคลอโรพลาสต์ดูดซับพลังงานแสงจากดวงอาทิตย์ เพื่อนำไปใช้ในการสังเคราะห์ด้วยแสง','CO₂ (คาร์บอนไดออกไซด์) เข้าสู่ใบผ่านปากใบ เพื่อนำไปใช้สร้างน้ำตาล','O₂ (ออกซิเจน) เป็นผลิตภัณฑ์ที่เกิดจากการสังเคราะห์ด้วยแสง โดยออกซิเจนส่วนหนึ่งแพร่ออกจากใบผ่านปากใบสู่บรรยากาศ และบางส่วนใช้ในการหายใจระดับเซลล์ของพืช','H₂O (น้ำ) ลำเลียงจากรากผ่านไซเล็มมายังใบ และไอน้ำบางส่วนออกจากใบผ่านปากใบในกระบวนการคายน้ำ','C₆H₁₂O₆ (กลูโคส) เป็นน้ำตาลที่พืชสร้างขึ้น โดยมักเปลี่ยนเป็นซูโครสก่อนลำเลียงทางโฟลเอ็มไปยังส่วนอื่น','เส้นใบเป็นส่วนหนึ่งของระบบท่อลำเลียง และปากใบช่วยควบคุมการแลกเปลี่ยนแก๊ส'],extra:'☀️ วงกลมสีส้มเล็ก ๆ แทนพลังงานแสงจากดวงอาทิตย์ที่คลอโรฟิลล์ดูดซับ • CO₂ และ H₂O เข้าสู่ใบ • O₂ และไอน้ำ (H₂O) ออกจากใบ • C₆H₁₂O₆ เคลื่อนออกจากแผ่นใบในภาพจำลอง เพื่อสื่อถึงการส่งน้ำตาลไปยังส่วนอื่นผ่านโฟลเอ็ม • O₂ คือแก๊สออกซิเจนที่พืชปล่อยออกสู่บรรยากาศได้ • 6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂ (สมการสรุปการสังเคราะห์ด้วยแสง) • ป้ายสีที่เคลื่อนไหวเป็นภาพจำลองทิศทางการเคลื่อนย้ายสาร ไม่ใช่การเคลื่อนที่ของโมเลกุลจริงทั้งหมด'},flower:{title:'🌸 ดอก',intro:'ดอกของพืชทำหน้าที่สืบพันธุ์ เปรียบเสมือนเป็นอวัยวะสืบพันธุ์ของพืชดอก โดยมีส่วนประกอบสำคัญ เช่น กลีบเลี้ยง กลีบดอก เกสรเพศผู้ และเกสรเพศเมีย',points:['ดอกทำหน้าที่สืบพันธุ์ ช่วยให้พืชดอกสามารถเกิดเมล็ดเพื่อขยายพันธุ์ได้','กลีบดอกช่วยดึงดูดสัตว์ผสมเกสรในพืชหลายชนิด','เกสรเพศผู้สร้างละอองเรณู','เกสรเพศเมียมีส่วนที่เกี่ยวข้องกับการรับเรณูและการเกิดเมล็ดหลังปฏิสนธิ'],extra:'🌸 ลูกศรในภาพขยายชี้ตำแหน่ง กลีบเลี้ยง (ห่อหุ้มดอกตูม) กลีบดอก (ช่วยดึงดูดผู้ผสมเกสร) เกสรเพศผู้ (สร้างละอองเรณู) และเกสรเพศเมีย (มีส่วนรับเรณูและมีรังไข่ที่บรรจุออวุล) • หมุนเพื่อดูตำแหน่งในมุมต่าง ๆ'}};
+function showPart(p){part=p;auto=false;document.querySelector('#rotate').textContent='▶ หมุนต่อ';document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.part===p));detail.classList.add('show');document.querySelector('#detailTitle').innerHTML=(p==='root'?'<span class="root-icon" aria-hidden="true"></span>':'')+data[p].title;info.innerHTML=`<h2>${p==='root'?'<span class="root-icon" aria-hidden="true"></span>':''}${data[p].title}</h2><p>${data[p].intro}</p><h3>⭐ หน้าที่สำคัญ</h3><ul>${data[p].points.map(s=>`<li>${s}</li>`).join('')}</ul><div class="pill">${data[p].extra}</div><p class="note">ภาพขยายเป็นแบบจำลองเพื่อช่วยให้เข้าใจโครงสร้าง ไม่ใช่ภาพเนื้อเยื่อจากกล้องจุลทรรศน์</p>`;clearModel();({root:createRoot,stem:createStem,leaf:createLeaf,flower:createFlower})[p]();resetView('detail');resize()}
+function goBack(){part=null;detail.classList.remove('show');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));info.innerHTML='<h2>🌳 ส่วนประกอบของพืช</h2><p>เลือกส่วนของพืชทางด้านบนเพื่อดูภาพขยายและหน้าที่ของส่วนนั้น ๆ</p><div class="pill">🌸 ต้นไม้จะหมุนต่อเนื่องเมื่อกลับสู่ภาพรวม</div>';auto=true;document.querySelector('#rotate').textContent='⏸ หยุดหมุน';resize()}
+// Orbit controls: camera rotates around a fixed target, with bounded elevation and zoom.
+const views={main:{cam:camera,focus:new THREE.Vector3(0,1.05,0),theta:0,phi:1.53,radius:13.8,min:5.4,max:23},detail:{cam:detailCam,focus:new THREE.Vector3(0,0,0),theta:0,phi:Math.PI/2,radius:6.8,min:2.6,max:14}};
+function applyView(v){const a=views[v];a.phi=THREE.MathUtils.clamp(a.phi,.14,Math.PI-.14);a.radius=THREE.MathUtils.clamp(a.radius,a.min,a.max);a.cam.position.set(a.focus.x+a.radius*Math.sin(a.phi)*Math.sin(a.theta),a.focus.y+a.radius*Math.cos(a.phi),a.focus.z+a.radius*Math.sin(a.phi)*Math.cos(a.theta));a.cam.lookAt(a.focus)}
+function orbit(v,dx,dy){views[v].theta-=dx*.007;views[v].phi-=dy*.007;applyView(v)}
+function zoom(v,factor){views[v].radius*=factor;applyView(v)}
+function resetView(v){let a=views[v];a.theta=0;a.phi=Math.PI/2;a.radius=v==='main'?13.8:part==='root'?9.2:part==='leaf'?7:6.8;applyView(v)}
+function setupPointer(el,v){let points=new Map(),lastDistance=null;el.addEventListener('pointerdown',e=>{points.set(e.pointerId,{x:e.clientX,y:e.clientY});el.setPointerCapture(e.pointerId)});el.addEventListener('pointermove',e=>{if(!points.has(e.pointerId))return;const prev=points.get(e.pointerId);points.set(e.pointerId,{x:e.clientX,y:e.clientY});if(points.size===1){orbit(v,e.clientX-prev.x,e.clientY-prev.y)}else if(points.size===2){const pts=[...points.values()],dist=Math.hypot(pts[0].x-pts[1].x,pts[0].y-pts[1].y);if(lastDistance)zoom(v,lastDistance/dist);lastDistance=dist}});const stop=e=>{points.delete(e.pointerId);lastDistance=null};el.addEventListener('pointerup',stop);el.addEventListener('pointercancel',stop);el.addEventListener('lostpointercapture',stop);el.addEventListener('wheel',e=>{e.preventDefault();zoom(v,Math.exp(e.deltaY*.001))},{passive:false})}
+// Select the plant part directly by raycasting its 3D surface.
+const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2(),pickTip=document.querySelector('#pickTip');
+const leafMaterials=new Set([green,...foliage,veins]),flowerMaterials=new Set([pink,yellow]),woodMaterials=new Set([bark,...wood]),rootMaterials=new Set([rootMat]);
+function plantPart(hit){let obj=hit.object;if(!obj.isMesh)return null;let mat=obj.material;if(flowerMaterials.has(mat))return 'flower';if(leafMaterials.has(mat))return 'leaf';if(rootMaterials.has(mat))return 'root';if(woodMaterials.has(mat))return 'stem';return null}
+function pickAt(e){let r=renderer.domElement.getBoundingClientRect();pointer.set(((e.clientX-r.left)/r.width)*2-1,-((e.clientY-r.top)/r.height)*2+1);raycaster.setFromCamera(pointer,camera);const hits=raycaster.intersectObject(tree,true);for(const hit of hits){const key=plantPart(hit);if(key)return key}return null}
+const names={root:'ราก',stem:'ลำต้น',leaf:'ใบ',flower:'ดอก'};let pickDown=null;
+renderer.domElement.addEventListener('pointerdown',e=>{pickDown={x:e.clientX,y:e.clientY,t:performance.now()}});
+renderer.domElement.addEventListener('pointerup',e=>{if(!pickDown)return;const moved=Math.hypot(e.clientX-pickDown.x,e.clientY-pickDown.y);pickDown=null;if(moved<(e.pointerType==='touch'?18:7)){let found=pickAt(e);if(found)showPart(found)}});
+renderer.domElement.addEventListener('pointermove',e=>{if(e.pointerType==='touch'){pickTip.style.display='none';return}if(e.buttons){pickTip.style.display='none';return}const key=pickAt(e);renderer.domElement.style.cursor=key?'pointer':'grab';pickTip.style.display=key?'block':'none';if(key){let r=stage.getBoundingClientRect();pickTip.textContent='🔎 '+names[key]+' • คลิกเพื่อสำรวจ';pickTip.style.left=Math.min(e.clientX-r.left+16,r.width-185)+'px';pickTip.style.top=Math.max(8,e.clientY-r.top-35)+'px'}});
+renderer.domElement.addEventListener('pointerleave',()=>pickTip.style.display='none');
+
+setupPointer(renderer.domElement,'main');setupPointer(detailRenderer.domElement,'detail');applyView('main');applyView('detail');
+document.querySelectorAll('[data-part]').forEach(b=>b.onclick=()=>showPart(b.dataset.part));document.querySelector('#back').onclick=goBack;document.querySelector('#rotate').onclick=()=>{auto=!auto;document.querySelector('#rotate').textContent=auto?'⏸ หยุดหมุน':'▶ หมุนต่อ'};
+document.querySelector('#reset').onclick=()=>{resetView('main');tree.rotation.set(0,0,0);auto=true;document.querySelector('#rotate').textContent='⏸ หยุดหมุน';if(part)goBack()};
+function action(v,d){if(d==='in')zoom(v,.82);else if(d==='out')zoom(v,1.22);else if(d==='reset')resetView(v);else orbit(v,d==='left'?-36:d==='right'?36:0,d==='up'?-36:d==='down'?36:0)}
+
+window.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','+','-'].includes(e.key)){e.preventDefault();const d={'ArrowLeft':'left','ArrowRight':'right','ArrowUp':'up','ArrowDown':'down','+':'in','-':'out'}[e.key];action(part?'detail':'main',d)}});
+function resize(){let w=stage.clientWidth,h=stage.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();let dw=holder.clientWidth,dh=holder.clientHeight;if(dw&&dh){detailRenderer.setSize(dw,dh,false);detailCam.aspect=dw/dh;detailCam.updateProjectionMatrix()}}if(typeof ResizeObserver!=='undefined'){new ResizeObserver(resize).observe(stage);new ResizeObserver(resize).observe(holder)}window.addEventListener('resize',resize,{passive:true});window.addEventListener('orientationchange',()=>setTimeout(resize,250));resize();let clock=new THREE.Clock(),fpsFrames=0,fpsStamp=performance.now();function animate(){requestAnimationFrame(animate);fpsFrames++;let now=performance.now();if(now-fpsStamp>1000){fpsFrames=0;fpsStamp=now;}let dt=Math.min(clock.getDelta(),.05);if(auto)tree.rotation.y+=dt*.065;windTime.value=now*.001;animateBirds(now*.001);panorama.position.set(camera.position.x,0,camera.position.z);if(part){for(let p of particles){if(p.rootWater){const t=(now*.001*p.speed+p.phase)%1;p.orb.position.copy(p.path.getPoint(t));const fade=Math.min(1,t*12,(1-t)*12);p.orb.material.opacity=Math.max(0,fade)*.94;p.orb.scale.setScalar(.72+.28*Math.sin(Math.PI*t));}else if(p.lightFlow){const t=(now*.001*p.speed+p.phase)%1;p.orb.position.set(p.start[0]+(p.end[0]-p.start[0])*t,p.start[1]+(p.end[1]-p.start[1])*t,p.start[2]);p.orb.material.opacity=Math.max(0,Math.min(1,t*9,(1-t)*9));}else if(p.sun){p.sunGroup.rotation.z+=dt*.15;p.sunGlow.material.opacity=.22+.07*Math.sin(now*.002)}else if(p.gasFlow){const t=((now*.001/p.duration)+p.phase)%1;const smooth=t*t*(3-2*t);p.orb.position.set(p.start[0]+(p.end[0]-p.start[0])*smooth,p.start[1]+(p.end[1]-p.start[1])*smooth,p.start[2]);p.orb.material.opacity=Math.min(1,t*9,(1-t)*9)}else if(p.leaf){p.orb.position.y=p.base+Math.sin(performance.now()*.001*p.speed*4)*.045}else{p.orb.position.y+=dt*p.speed*(p.up?1:-1);if(p.orb.position.y>2)p.orb.position.y=-2;if(p.orb.position.y< -2)p.orb.position.y=2}}detailRenderer.render(detailScene,detailCam)}renderer.render(scene,camera)}animate();
+</script>
+<script>
+(()=>{'use strict';
+const S=document.getElementById('cellVisual'),H=document.getElementById('cellHeading'),T=document.getElementById('cellText'),F=document.getElementById('cellFacts');
+const parts={
+ wall:['ผนังเซลล์ (Cell wall)','ประกอบด้วยเซลลูโลสเป็นหลัก ช่วยคงรูปร่าง ปกป้องและพยุงเซลล์'],
+ membrane:['เยื่อหุ้มเซลล์ (Plasma membrane)','ควบคุมการผ่านเข้าและออกของสารระหว่างเซลล์กับสิ่งแวดล้อม'],
+ vacuole:['แวคิวโอลกลาง (Central vacuole)','เก็บน้ำและสารละลาย ช่วยสร้างแรงดันเต่งที่พยุงเซลล์'],
+ nucleus:['นิวเคลียส (Nucleus)','บรรจุสารพันธุกรรม DNA และควบคุมกิจกรรมของเซลล์'],
+ chloroplast:['คลอโรพลาสต์ (Chloroplast)','มีคลอโรฟิลล์และเป็นบริเวณที่เกิดการสังเคราะห์ด้วยแสง พบมากในเซลล์สีเขียวของใบ'],
+ mitochondrion:['ไมโทคอนเดรีย (Mitochondrion)','สร้างพลังงาน ATP ผ่านกระบวนการหายใจระดับเซลล์'],
+ cytoplasm:['ไซโทพลาซึม (Cytoplasm)','บริเวณภายในเซลล์ที่มีออร์แกเนลล์และเกิดปฏิกิริยาเคมีจำนวนมาก'],
+ plasmodesmata:['พลาสโมเดสมาตา (Plasmodesmata)','ช่องเชื่อมระหว่างเซลล์พืชที่อยู่ติดกัน ช่วยให้สารและสัญญาณผ่านระหว่างเซลล์'],
+ rootHair:['เซลล์ขนราก (Root hair cell)','เซลล์ผิวรากที่ยื่นเป็นขน เพิ่มพื้นที่ผิวสำหรับดูดน้ำและแร่ธาตุ'],
+ xylem:['เซลล์ท่อลำเลียงน้ำ (Xylem)','เวสเซลเอลิเมนต์และเทรคีดมีผนังเสริมลิกนิน เมื่อทำหน้าที่ลำเลียงจะเป็นเซลล์ที่ตายแล้ว'],
+ phloem:['ซีฟทิวบ์และเซลล์ประกบ (Phloem)','ซีฟทิวบ์ลำเลียงน้ำตาลโดยมีเซลล์ประกบช่วยการทำงาน การไหลขึ้นหรือลงขึ้นกับแหล่งสร้างและแหล่งใช้'],
+ guard:['เซลล์คุม (Guard cells)','เซลล์คุมสองเซลล์ล้อมช่องปากใบ ปรับการเปิดปิดเพื่อควบคุมการแลกเปลี่ยนแก๊สและการคายน้ำ'],
+ mesophyll:['เซลล์เนื้อใบ (Mesophyll)','เซลล์พาเรงคิมาที่มีคลอโรพลาสต์จำนวนมาก เป็นแหล่งสังเคราะห์ด้วยแสงสำคัญ'],
+ pollen:['ละอองเรณู (Pollen grain)','แกมีโทไฟต์เพศผู้ของพืชดอก มีเซลล์ที่เกี่ยวข้องกับการสร้างและนำส่งเซลล์สืบพันธุ์เพศผู้'],
+ ovule:['ออวุล (Ovule)','อยู่ภายในรังไข่ของดอก ภายในมีแกมีโทไฟต์เพศเมียและเซลล์ไข่ หลังปฏิสนธิออวุลพัฒนาเป็นเมล็ด']
+};
+const a=(key,shape)=>`<g data-cell="${key}" tabindex="0" role="button" aria-label="${parts[key][0]}">${shape}</g>`;
+const cell=(x,y,w=360,h=245)=>`
+${a('wall',`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="36" fill="#a9d77b" stroke="#538a3e" stroke-width="13"/>`)}
+${a('membrane',`<rect x="${x+12}" y="${y+12}" width="${w-24}" height="${h-24}" rx="26" fill="#e4f7a8" stroke="#f7d05b" stroke-width="5"/>`)}
+${a('cytoplasm',`<rect x="${x+22}" y="${y+22}" width="${w-44}" height="${h-44}" rx="18" fill="#d6f4be"/>`)}
+${a('vacuole',`<rect x="${x+84}" y="${y+48}" width="${w-148}" height="${h-92}" rx="34" fill="#a8e4fa" stroke="#6cbdd8" stroke-width="4"/>`)}
+${a('nucleus',`<circle cx="${x+67}" cy="${y+65}" r="28" fill="#a982d4" stroke="#7655a6" stroke-width="4"/><circle cx="${x+67}" cy="${y+65}" r="10" fill="#65418e"/>`)}
+${[0,1,2,3,4].map((_,i)=>a('chloroplast',`<ellipse cx="${x+45+(i%2)*255}" cy="${y+118+Math.floor(i/2)*42}" rx="25" ry="12" fill="#47a94b" stroke="#24723a" stroke-width="3"/><path d="M ${x+30+(i%2)*255} ${y+118+Math.floor(i/2)*42} h30" stroke="#a4e37b" stroke-width="3"/>`)).join('')}
+${a('mitochondrion',`<ellipse cx="${x+70}" cy="${y+h-46}" rx="28" ry="15" fill="#ffb96d" stroke="#d27b3d" stroke-width="3"/><path d="M${x+48} ${y+h-46} q12 -15 22 0 t22 0" fill="none" stroke="#bb6935" stroke-width="3"/>`)}
+${a('plasmodesmata',`<path d="M${x+w-10} ${y+85} h22 M${x+w-10} ${y+99} h22" stroke="#784f9e" stroke-width="6"/>`)}`;
+const wrap=content=>`<svg viewBox="0 0 560 370" xmlns="http://www.w3.org/2000/svg" aria-label="ภาพจำลองเซลล์พืชแบบโต้ตอบ"><rect width="560" height="370" rx="24" fill="#f3f9f1"/>${content}</svg>`;
+const scenes={
+ general:()=>wrap(cell(95,54)),
+ root:()=>wrap(`${a('rootHair',`<path d="M125 72 H350 Q390 72 390 112 L390 130 Q450 90 505 130 Q530 152 502 172 Q440 194 390 155 L390 292 Q390 316 355 316 H125 Q90 316 90 280 V105 Q90 72 125 72Z" fill="#f5d6a4" stroke="#b98252" stroke-width="11"/>`)}${a('vacuole',`<rect x="145" y="105" width="210" height="175" rx="35" fill="#c1e7fa" stroke="#87c7e0" stroke-width="4"/>`)}${a('nucleus',`<circle cx="130" cy="192" r="23" fill="#a786c7" stroke="#725398" stroke-width="4"/>`)}<text x="280" y="348" text-anchor="middle" font-size="16" fill="#5a7653">ขนรากเป็นส่วนยื่นของเซลล์ผิวราก</text>`),
+ stem:()=>wrap(`${[0,1,2,3].map(i=>a('xylem',`<rect x="${78+i*49}" y="65" width="39" height="235" rx="14" fill="#8ad7f3" stroke="#268bb8" stroke-width="5"/><path d="M${97+i*49} 270 V100 m-10 12 10 -14 10 14" fill="none" stroke="#fff" stroke-width="4"/>`)).join('')}${[0,1,2].map(i=>a('phloem',`<rect x="${330+i*51}" y="65" width="40" height="235" rx="14" fill="#ffc57f" stroke="#d17d39" stroke-width="5"/><path d="M${350+i*51} 98 V265 m-10 -12 10 14 10 -14" fill="none" stroke="#fff" stroke-width="4"/>`)).join('')}<text x="170" y="332" text-anchor="middle" fill="#247ba0" font-size="19">ไซเล็ม ↑</text><text x="405" y="332" text-anchor="middle" fill="#b36b29" font-size="19">โฟลเอ็ม ↕</text>`),
+ leaf:()=>wrap(`${a('mesophyll',`<rect x="70" y="60" width="420" height="255" rx="28" fill="#a2d97b" stroke="#4c9143" stroke-width="7"/>`)}${[0,1,2,3,4,5].map(i=>cell(90+(i%3)*135,85+Math.floor(i/3)*112,123,100)).join('')}${a('guard',`<ellipse cx="277" cy="191" rx="22" ry="39" fill="#52ac66" stroke="#277849" stroke-width="4"/><ellipse cx="319" cy="191" rx="22" ry="39" fill="#52ac66" stroke="#277849" stroke-width="4"/><ellipse cx="298" cy="191" rx="8" ry="32" fill="#f4fff2"/>`)}`),
+ flower:()=>wrap(`${a('pollen',`<circle cx="170" cy="175" r="75" fill="#f8dc75" stroke="#dca640" stroke-width="7"/>${Array.from({length:12},(_,i)=>{let t=i*Math.PI/6;return `<circle cx="${170+69*Math.cos(t)}" cy="${175+69*Math.sin(t)}" r="10" fill="#e9b947"/>`}).join('')}<circle cx="150" cy="164" r="18" fill="#e5a83a"/><circle cx="190" cy="183" r="16" fill="#e5a83a"/>`)}${a('ovule',`<path d="M385 72 Q480 100 460 220 Q450 295 375 294 Q313 288 325 204 Q335 100 385 72Z" fill="#b2dd86" stroke="#5d9953" stroke-width="7"/><ellipse cx="392" cy="202" rx="38" ry="60" fill="#e6f6c5" stroke="#86b56b" stroke-width="4"/><circle cx="393" cy="228" r="16" fill="#f4c681"/>`)}<text x="170" y="330" text-anchor="middle" font-size="18" fill="#98742c">ละอองเรณู</text><text x="396" y="330" text-anchor="middle" font-size="18" fill="#477c43">ออวุล</text>`)
+};
+const intro={general:'เซลล์พืชทั่วไป: สำรวจผนังเซลล์ เยื่อหุ้มเซลล์ แวคิวโอล นิวเคลียส คลอโรพลาสต์ และออร์แกเนลล์อื่น ๆ',root:'เซลล์ขนรากเป็นเซลล์ผิวรากที่ยื่นออกมาเพิ่มพื้นที่ดูดซึม โดยทั่วไปไม่มีคลอโรพลาสต์',stem:'ไซเล็มลำเลียงน้ำและแร่ธาตุ ส่วนโฟลเอ็มลำเลียงน้ำตาลจากแหล่งสร้างไปยังแหล่งใช้หรือสะสม',leaf:'เซลล์เนื้อใบจำนวนมากมีคลอโรพลาสต์ ส่วนเซลล์คุมควบคุมช่องปากใบ',flower:'ละอองเรณูและออวุลเป็นโครงสร้างจริงที่เกี่ยวข้องกับการสืบพันธุ์ของพืชดอก'};
+function select(key){H.textContent=parts[key][0];T.textContent=parts[key][1]}
+function view(name){S.innerHTML=scenes[name]();H.textContent=document.querySelector(`[data-view="${name}"]`).textContent;T.textContent=intro[name];F.textContent='แตะบริเวณสีต่าง ๆ ในภาพเพื่อดูรายละเอียด';document.querySelectorAll('#cellTabs button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.view===name)))}
+document.querySelector('#cellTabs').addEventListener('click',e=>{const b=e.target.closest('[data-view]');if(b)view(b.dataset.view)});
+S.addEventListener('click',e=>{const g=e.target.closest('[data-cell]');if(g)select(g.dataset.cell)});
+S.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const g=e.target.closest('[data-cell]');if(g){e.preventDefault();select(g.dataset.cell)}}});
+view('general');
+})();
+</script>
+</body></html>
